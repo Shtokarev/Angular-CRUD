@@ -1,0 +1,99 @@
+<div>
+  <form [formGroup]="inputForm" (ngSubmit)="submit()" class="form-group">
+    <div class="form-group input-product mt-3">
+      <label for="name">Name of Product</label>
+      <input
+        id="name"
+        formControlName="name"
+        placeholder="Name"
+        class="form-control input-product col-md-6"
+      />
+      <small
+        *ngIf="
+          inputForm.controls['name'].invalid && inputForm.get('name').touched
+        "
+        class="form-text text-danger validation"
+        >Please, enter at least 3 characters
+      </small>
+    </div>
+
+    <div class="form-group input-product mt-3">
+      <label for="description">Description</label>
+      <input
+        id="description"
+        formControlName="description"
+        placeholder="Description"
+        class="form-control input-product col-md-6"
+      />
+      <small
+        *ngIf="
+          inputForm.controls['description'].invalid &&
+          inputForm.get('description').touched
+        "
+        class="form-text text-danger validation"
+        >Please, enter at least 3 characters
+      </small>
+    </div>
+
+    <div class="form-group input-product mt-3">
+      <label for="price">Price</label>
+      <input
+        id="price"
+        formControlName="price"
+        placeholder="Price"
+        class="form-control input-product col-md-3"
+      />
+      <small
+        *ngIf="
+          inputForm.controls['price'].invalid && inputForm.get('price').touched
+        "
+        class="form-text text-danger validation"
+        >Please, enter price only
+      </small>
+    </div>
+
+    <div class="form-group input-product mt-3">
+      <label for="qty">Quantity</label>
+      <input
+        id="qty"
+        formControlName="qty"
+        placeholder="Qty"
+        class="form-control input-product col-md-3"
+      />
+      <small
+        *ngIf="
+          inputForm.controls['qty'].invalid && inputForm.get('qty').touched
+        "
+        class="form-text text-danger validation"
+        >Please, enter digit only
+      </small>
+    </div>
+  </form>
+
+  <div class="row mt-5">
+    <button
+      class="btn btn-outline-secondary btn-lg col-md-2"
+      (click)="getProductHandler()"
+    >
+      Get products
+    </button>
+    <button
+      class="btn btn-outline-secondary btn-lg col-md-2 offset-md-1"
+      (click)="submit()"
+    >
+      Create product
+    </button>
+    <button
+      class="btn btn-outline-secondary btn-lg col-md-2 offset-md-1"
+      (click)="updateProductHandler()"
+    >
+      Update product
+    </button>
+    <button
+      class="btn btn-outline-secondary btn-lg col-md-2 offset-md-1"
+      (click)="deleteProductHandler()"
+    >
+      Delete product
+    </button>
+  </div>
+</div>
