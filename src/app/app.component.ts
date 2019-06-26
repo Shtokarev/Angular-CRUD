@@ -6,9 +6,10 @@ import { GetProducts, SetCurrectProduct } from '@app/core/store/actions';
 import {
   selectProductsList,
   selectRequestState,
-  selectCurrentProduct
+  selectCurrentProduct,
+  selectRequestDescription
 } from '@app/core/store/selectors';
-import { IProduct, ERequestState } from './core/models';
+import { IProduct } from './core/models';
 
 @Component({
   selector: 'app-root',
@@ -20,16 +21,18 @@ export class AppComponent implements OnInit {
   currentProduct$ = this.store.pipe(select(selectCurrentProduct));
   products$ = this.store.pipe(select(selectProductsList));
   request$ = this.store.pipe(select(selectRequestState));
+  description$ = this.store.pipe(select(selectRequestDescription));
 
   constructor(private store: Store<IAppState>) {}
 
   ngOnInit() {
+    // check initial loading after 1500ms
     setTimeout(() => {
       this.store.dispatch(new GetProducts());
     }, 1500);
   }
 
-  onRowClick(index: IProduct) {
+  onRowClick(index: IProduct): void {
     this.store.dispatch(new SetCurrectProduct(index));
   }
 }

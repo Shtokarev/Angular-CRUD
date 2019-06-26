@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { IProduct } from '@app/core/models';
 import {
   HttpEvent,
   HttpInterceptor,
   HttpHandler,
   HttpRequest,
-  HttpResponse
+  HttpResponse,
+  HttpErrorResponse
 } from '@angular/common/http';
 
 let localServerStorage = [
@@ -45,7 +46,14 @@ export class ApiInterceptor implements HttpInterceptor {
 
     if (request.method === 'POST') {
       const newProduct: IProduct = { ...request.body };
-      newProduct.id = localServerStorage.length;
+      newProduct.id =
+        localServerStorage.reduce((prev: number, current: IProduct) => {
+          if (current.id > prev) {
+            return current.id;
+          }
+          return prev;
+        }, 0) + 1;
+
       localServerStorage.push(newProduct);
 
       return of(
@@ -61,11 +69,8 @@ export class ApiInterceptor implements HttpInterceptor {
       );
 
       if (foundIndex === -1) {
-        return of(
-          new HttpResponse({
-            status: 404,
-            statusText: 'Not found'
-          })
+        return throwError(
+          new HttpErrorResponse({ status: 404, statusText: 'Not found' })
         );
       }
 
@@ -73,7 +78,10 @@ export class ApiInterceptor implements HttpInterceptor {
 
       return of(
         new HttpResponse({
-          status: 200
+          status: 200,
+          body: {
+            product: localServerStorage[foundIndex]
+          }
         })
       );
     }
@@ -86,11 +94,8 @@ export class ApiInterceptor implements HttpInterceptor {
       );
 
       if (foundIndex === -1) {
-        return of(
-          new HttpResponse({
-            status: 404,
-            statusText: 'Not found'
-          })
+        return throwError(
+          new HttpErrorResponse({ status: 404, statusText: 'Not found' })
         );
       }
 

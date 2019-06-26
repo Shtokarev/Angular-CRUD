@@ -23,7 +23,7 @@ export class InputProductComponent implements OnInit, OnDestroy {
   @Input() product$: Observable<IProduct>;
 
   private ngUnsubscribe$ = new Subject();
-  private currentProductId: number;
+  currentProductId: number;
 
   public inputForm: FormGroup = new FormGroup({
     name: new FormControl(
@@ -73,7 +73,7 @@ export class InputProductComponent implements OnInit, OnDestroy {
     });
   }
 
-  submit() {
+  submit(): void {
     if (!this.inputForm.valid) {
       for (const i in this.inputForm.controls) {
         if (!this.inputForm.controls[i].valid) {
@@ -85,11 +85,11 @@ export class InputProductComponent implements OnInit, OnDestroy {
     this.store.dispatch(new CreateProduct(this.inputForm.value));
   }
 
-  getProductHandler() {
+  getProductHandler(): void {
     this.store.dispatch(new GetProducts());
   }
 
-  updateProductHandler() {
+  updateProductHandler(): void {
     if (!this.inputForm.valid) {
       for (const i in this.inputForm.controls) {
         if (!this.inputForm.controls[i].valid) {
@@ -107,7 +107,7 @@ export class InputProductComponent implements OnInit, OnDestroy {
     );
   }
 
-  deleteProductHandler() {
+  deleteProductHandler(): void {
     this.store.dispatch(
       new DeleteProduct({
         id: this.currentProductId,

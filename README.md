@@ -1,5 +1,17 @@
 # CRUD
 
+Test task with the following requirements:
+Data object: product
+implement CRUD (with validation)
+use:
+
+- Angular
+- ngrx
+- bootstrap 4
+
+To imitate the backend, use the HttpInterceptor
+time limit 6 hours
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
 
 ## Development server
